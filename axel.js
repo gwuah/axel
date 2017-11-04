@@ -27,7 +27,7 @@
             // key is a parameter whose value changes in any given data
             // it could be an "id", "hash", or any unique property of a dataset
 
-            if (this.contains(data[key])) {
+            if (this.contains(key, data[key])) {
                 console.log("data already exists in db");
                 return false
 
