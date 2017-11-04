@@ -2,48 +2,39 @@
     
     "use strict";
     
-    let obj ;
-    
-    function Storage(appName) {
-        return new Storage.init(appName);
+    function Axel(name) {
+        return new Axel.init(name);
     }
     
-    Storage.init = function (appName) {
-        this.appName = appName;
-        this.ls = localStorage;
-        
+    Axel.init = function (name) {
+        this.name = name;
         // check if pointer to database already exists
         // if it does, dont create a new database else create a new database
-        
-        if (this.ls.getItem(appName)) {
-            this.db = JSON.parse(this.ls.getItem(appName));
-        } else {
-            this.db = [];
-        }
+        this.db = JSON.parse(localStorage.getItem(name)) || []
     };
     
-    Storage.prototype = {
+    Axel.prototype = {
 
-        contains: function(tweetNonce) {
-            return this.db.some(entry => entry.tweetNonce == tweetNonce);
+        contains(key, value) {
+            return this.db.some(chunk => chunk[key] == value)
         },
 
-        updateDb: function() {
-            this.ls.setItem(this.appName, JSON.stringify(this.db));
-        }, 
-        
-        save: function(payload) {
-            // check whether tweet already exists in db;
-            // if it does, don't save to db!
+        updateDb() {
+            localStorage.setItem(this.name, JSON.stringify(this.db))
+        },
 
-            if (this.contains(payload.tweetNonce)) {
-                console.log("tweet has already been saved!");
+        save: function(data, key) {
+            // key is a parameter whose value changes in any given data
+            // it could be an "id", "hash", or any unique property of a dataset
+
+            if (this.contains(data[key])) {
+                console.log("data already exists in db");
                 return false
 
             } else {
-                this.db.push(payload);
+                this.db.push(data);
                 this.updateDb();
-                console.log("tweet saved!")
+                console.log("data saved!")
                 return true
             }
         },
@@ -55,25 +46,7 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    Storage.init.prototype = Storage.prototype;
-    global.d$ = global.database = Storage;
+    Axel.init.prototype = Axel.prototype;
+    global.a$ = global.axel = Axel;
     
 }(window, document));
