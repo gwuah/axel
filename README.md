@@ -12,7 +12,7 @@
 	<li>Axel has 4 methods as of now, 
 		<ul>
 			<li><strong>.save()</strong></li>
-			<li><strong>.fetdhAllSaved()</strong></li>
+			<li><strong>.fetchAllSaved()</strong></li>
 			<li><strong>.contains()</strong></li>
 			<li><strong>.updateDatabase()</strong></li>
 		</ul>
